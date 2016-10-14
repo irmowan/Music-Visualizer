@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <audio id="music" controls></audio>
+    <input id="input-file" type="file" accept="audio/mp3" onchange="onFileSelect()"/>
+    <canvas id="visualizer"></canvas>
+</div>
+</body>
+<script>
+    function onFileSelect() {
+        var file = document.getElementById('input-file').files[0];
+        document.getElementById('music').src = URL.createObjectURL(file);
+    }
+</script>
+</html>
