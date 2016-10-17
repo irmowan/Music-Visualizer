@@ -13,7 +13,7 @@ audioSource.connect(audioAnalyser);
 audioAnalyser.connect(audioContext.destination);
 
 function getData() {
-    analyser.getByteFrequencyData(freqByteData);
+    audioAnalyser.getByteFrequencyData(freqByteData);
     return freqByteData;
 }
 
