@@ -2,7 +2,7 @@
  * Created by irmo on 16/10/13.
  */
 
-var audio = document.getElementById("music");
+var audio = document.getElementById('music');
 var audioContext = new AudioContext();
 var audioAnalyser = audioContext.createAnalyser();
 var audioSource = audioContext.createMediaElementSource(audio);
@@ -13,13 +13,10 @@ audioSource.connect(audioAnalyser);
 audioAnalyser.connect(audioContext.destination);
 
 function getData() {
-    audioAnalyser.getByteFrequencyData(freqByteData);
-    return freqByteData;
+  audioAnalyser.getByteFrequencyData(freqByteData);
+  return freqByteData;
 }
 
 function getFftSize() {
-    return analyser.fftSize;
+  return audioAnalyser.fftSize;
 }
-
-
-
