@@ -6,8 +6,8 @@ var canvas = document.getElementById('visualizer');
 var ctx = canvas.getContext('2d');
 var width = canvas.width;
 var height = canvas.height;
-var particles = [];
-var p, data, len, i;
+var circles = [];
+var p, data;
 
 const colors = [
   '105, 210, 231',
@@ -22,63 +22,75 @@ const colors = [
   '12, 202, 186',
   '255, 0, 111'
 ];
-const frequencyInterval = 5;
-const initOpacity = 0.2;
-const opacityRate = 0.03;
-const sizeRate = 5;
-const refreshRate = 15;
+const frequencyInterval = 8;
+const initOpacity = 0.25;
+const opacityRate = 0.02;
+const sizeRate = 3;
+const refreshRate = 25;
+const sizeThreshold = 20;
+const lifeThreshold = 150;
+const re = /,[\d\s.]*\)/;
 
+function updateCircle(c, diff, increase) {
+  c.life++;
+  if (increase && c.life < lifeThreshold) {
+    c.size += Math.floor(diff) / sizeRate;
+    c.opacity += opacityRate;
+    if (c.opacity > 1) {
+      c.opacity = 1;
+    }
+  }
+  else {
+    c.size -= Math.floor(diff) / sizeRate;
+    if (c.size < 0) {
+      c.size = 0;
+    }
+    c.opacity -= opacityRate;
+    if (c.opacity < 0) {
+      c.opacity = 0;
+    }
+  }
+}
 
 function draw() {
   ctx.save();
   data = getData();
   ctx.clearRect(0, 0, width, height);
-  for (i = 0, len = data.length; i < len; i = i + frequencyInterval) {
-    p = particles[i];
-    if (p.size == 0) {
-      p.size = data[i];
-    } else {
-      if (p.size < data[i]) {
-        p.size += Math.floor((data[i] - p.size) / sizeRate);
-        p.opacity = p.opacity + opacityRate;
-        if (p.opacity > 1) {
-          p.opacity = 1;
-        }
-      } else {
-        p.size -= Math.floor((p.size - data[i]) / sizeRate);
-        if (data[i] == 0) {
-          p.opacity = 0;
-        } else {
-          p.opacity = p.opacity - opacityRate;
-          if (p.opacity < 0) {
-            p.opacity = 0;
-            p.x = Math.random() * canvas.width;
-            p.y = Math.random() * canvas.height;
-          }
-        }
-      }
+  for (var i = 0, len = data.length; i < len; i += frequencyInterval) {
+    var circle = new Object(circles[i]);
+    if (circle.size == 0) {
+      circle = initCircle(data[i]);
     }
-    var color = p.color.replace('0)', p.opacity + ')');
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI, true);
-    // ctx.closePath();
-    ctx.fill();
+    else {
+      updateCircle(circle, Math.abs(data[i] - circle.size), circle.size < data[i]);
+    }
+    circles[i] = circle;
+    if (circle.size > sizeThreshold) {
+      ctx.fillStyle = circle.color.replace(re, ', ' + circle.opacity + ')');
+      ctx.beginPath();
+      ctx.arc(circle.x, circle.y, circle.size, 0, 2 * Math.PI, true);
+      ctx.fill();
+    }
   }
   ctx.restore();
 }
 
+function initCircle(size) {
+  var c = {
+    x: Math.random() * width,
+    y: Math.random() * height,
+    color: 'rgba(' + colors[Math.floor(Math.random() * colors.length)] + ', 0)',
+    size: size,
+    opacity: Math.random() / 2 + initOpacity,
+    life: 0
+  };
+  return c;
+}
+
 function initDraw() {
-  var i, len = getFftSize() / 2;
-  colorNum = colors.length;
-  for (i = 0; i < len; i++) {
-    particles[i] = {
-      x: Math.random() * width,
-      y: Math.random() * height,
-      color: 'rgba(' + colors[Math.floor(Math.random() * colorNum)] + ', 0)',
-      size: 0,
-      opacity: Math.random() + initOpacity
-    }
+  var len = getFftSize() / 2;
+  for (var i = 0; i < len; i++) {
+    circles[i] = initCircle(0);
   }
 }
 
