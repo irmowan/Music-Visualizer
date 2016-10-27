@@ -8,7 +8,8 @@ var width = canvas.width;
 var height = canvas.height;
 var particles = [];
 var p, data, len, i;
-var colors = [
+
+const colors = [
   '105, 210, 231',
   '27, 103, 107',
   '190, 242, 2',
@@ -19,29 +20,36 @@ var colors = [
   '255, 78, 80',
   '231, 32, 78',
   '12, 202, 186',
-  '255, 0, 111'];
+  '255, 0, 111'
+];
+const frequencyInterval = 5;
+const initOpacity = 0.2;
+const opacityRate = 0.03;
+const sizeRate = 5;
+const refreshRate = 15;
+
 
 function draw() {
   ctx.save();
   data = getData();
   ctx.clearRect(0, 0, width, height);
-  for (i = 0, len = data.length; i < len; i = i + 5) {
+  for (i = 0, len = data.length; i < len; i = i + frequencyInterval) {
     p = particles[i];
     if (p.size == 0) {
       p.size = data[i];
     } else {
       if (p.size < data[i]) {
-        p.size += Math.floor((data[i] - p.size) / 5);
-        p.opacity = p.opacity + 0.02;
+        p.size += Math.floor((data[i] - p.size) / sizeRate);
+        p.opacity = p.opacity + opacityRate;
         if (p.opacity > 1) {
           p.opacity = 1;
         }
       } else {
-        p.size -= Math.floor((p.size - data[i]) / 5);
+        p.size -= Math.floor((p.size - data[i]) / sizeRate);
         if (data[i] == 0) {
           p.opacity = 0;
         } else {
-          p.opacity = p.opacity - 0.02;
+          p.opacity = p.opacity - opacityRate;
           if (p.opacity < 0) {
             p.opacity = 0;
             p.x = Math.random() * canvas.width;
@@ -69,7 +77,7 @@ function initDraw() {
       y: Math.random() * height,
       color: 'rgba(' + colors[Math.floor(Math.random() * colorNum)] + ', 0)',
       size: 0,
-      opacity: Math.random() + 0.2
+      opacity: Math.random() + initOpacity
     }
   }
 }
@@ -80,5 +88,5 @@ function beginDraw() {
   setInterval(function () {
     console.log('drawing...');
     draw();
-  }, 20);
+  }, refreshRate);
 }
