@@ -20,7 +20,7 @@ function playSwitch() {
 document.addEventListener('keydown', function (e) {
   switch (e.keyCode) {
     case 32:
-      console.log('Ke  y down: space.');
+      console.log('Key down: space.');
       playSwitch();
       break;
   }
