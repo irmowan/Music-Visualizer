@@ -6,9 +6,9 @@ var audio = document.getElementById('music');
 var audioContext = new AudioContext();
 var audioAnalyser = audioContext.createAnalyser();
 var audioSource = audioContext.createMediaElementSource(audio);
+var freqByteData = new Uint8Array(audioAnalyser.frequencyBinCount);
 
 audioAnalyser.fftSize = 512;
-var freqByteData = new Uint8Array(audioAnalyser.frequencyBinCount);
 audioSource.connect(audioAnalyser);
 audioAnalyser.connect(audioContext.destination);
 

@@ -22,7 +22,7 @@ var colors = [
   '255, 0, 111'];
 
 function draw() {
-  // ctx.save();
+  ctx.save();
   data = getData();
   ctx.clearRect(0, 0, width, height);
   for (i = 0, len = data.length; i < len; i = i + 5) {
@@ -76,13 +76,9 @@ function initDraw() {
 
 function beginDraw() {
   console.log('Begin draw.');
-  ctx.fillStyle = 'blue';
-  ctx.beginPath();
-  ctx.arc(100, 100, 50, 0, 2 * Math.PI, true);
-  ctx.fill();
   initDraw();
   setInterval(function () {
-    console.log('drawing');
+    console.log('drawing...');
     draw();
   }, 20);
 }
