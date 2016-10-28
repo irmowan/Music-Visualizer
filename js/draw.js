@@ -25,6 +25,7 @@ const colors = [
 const frequencyInterval = 8;
 const initOpacity = 0.25;
 const opacityRate = 0.02;
+const maxOpacity = 0.8;
 const sizeRate = 3;
 const refreshRate = 25;
 const sizeThreshold = 20;
@@ -36,8 +37,8 @@ function updateCircle(c, diff, increase) {
   if (increase && c.life < lifeThreshold) {
     c.size += Math.floor(diff) / sizeRate;
     c.opacity += opacityRate;
-    if (c.opacity > 1) {
-      c.opacity = 1;
+    if (c.opacity > maxOpacity) {
+      c.opacity = maxOpacity;
     }
   }
   else {
