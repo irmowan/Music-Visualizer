@@ -1,10 +1,18 @@
 ## Music Visualizer
 
-音乐旋律可视化，项目用圈圈的形式可视化音乐
+音乐可视化
 
 GitHub: [Music Visualizer](https://github.com/irmowan/Music-Visualizer)
 
 Demo: [Music Visualizer](http://irmo.me/Music-Visualizer/)
+
+#### Introduction
+
+项目用圆圈的变动表示音乐节奏，每一个圆圈表示该时刻的某一个频率，圆圈的位置随机，大小和透明度表示了某个频率的强度，半透明可以让页面更加美观。
+
+页面有固定的刷新频率，在音乐暂停、播放、结束时提供了比较缓和的转场。
+
+对于钢琴曲等只在某几个频率上有音强的音乐，圈圈较少且较大；而对于歌手演唱的流行歌曲，因频率覆盖范围广，圆圈较多，大小不一。
 
 #### Usage
 
