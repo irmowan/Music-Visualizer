@@ -12,7 +12,7 @@ Demo: [Music Visualizer](http://irmo.me/Music-Visualizer/)
 
 页面有固定的刷新频率，在音乐暂停、播放、结束时提供了比较缓和的转场。
 
-对于钢琴曲等只在某几个频率上有音强的音乐，圈圈较少且较大；而对于歌手演唱的流行歌曲，因频率覆盖范围广，圆圈较多，大小不一。
+对于钢琴曲等只在某几个频率上有音强的音乐，圈圈较少且较大；而对于歌手演唱的流行歌曲，因频率覆盖范围广，圆圈较多，大小不一。这个样式适合节奏感较强的音乐。
 
 #### Usage
 
@@ -50,6 +50,6 @@ Under GPL-3.0
 
 ---
 
-Author: [irmo<irmowan@gmail.com>](https://github.com/irmowan)
+Author: [irmo](https://github.com/irmowan)
 
 Date: 2016.10
